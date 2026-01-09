@@ -63,8 +63,8 @@ const Reports = () => {
 
   const handleExport = () => {
     dispatch(exportToExcel(filters));
-    
-    
+
+
   };
 
   const months = [
@@ -112,7 +112,7 @@ const Reports = () => {
   const userReports = report?.userReports || [];
   const chartData = report?.chartData || [];
   console.log("jjjj", reportData?.report?.chartData);
-  
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -221,8 +221,8 @@ const Reports = () => {
                   key={type}
                   onClick={() => setFilters(prev => ({ ...prev, reportType: type }))}
                   className={`px-4 py-2 rounded-md font-medium ${filters.reportType === type
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                     }`}
                 >
                   {type.charAt(0).toUpperCase() + type.slice(1)} Report
@@ -316,28 +316,35 @@ const Reports = () => {
             {chartData.length > 0 && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                 {/* Pie Chart */}
+                {/* Pie Chart */}
                 <div className="bg-white rounded-lg shadow p-6">
                   <h3 className="text-lg font-semibold mb-4">Task Status Distribution</h3>
                   <div className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
-                        <Pie
-                          data={chartData}
-                          cx="50%"
-                          cy="50%"
-                          labelLine={false}
-                          label={(entry) => `${entry.name}: ${entry.value}`}
-                          outerRadius={80}
-                          fill="#8884d8"
-                          dataKey="value"
-                        >
-                          {chartData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
-                          ))}
-                        </Pie>
-                        <Tooltip />
-                      </PieChart>
-                    </ResponsiveContainer>
+                    {chartData.filter(item => item.value > 0).length > 0 ? (
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={chartData.filter(item => item.value > 0)}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            label={(entry) => `${entry.name}: ${entry.value}`}
+                            outerRadius={80}
+                            fill="#8884d8"
+                            dataKey="value"
+                          >
+                            {chartData.filter(item => item.value > 0).map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                          </Pie>
+                          <Tooltip />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    ) : (
+                      <div className="h-full flex items-center justify-center text-gray-500">
+                        No task data available
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -414,8 +421,8 @@ const Reports = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span className={`px-2 py-1 rounded-full text-xs font-medium ${task.status === 'completed' ? 'bg-green-100 text-green-800' :
-                                task.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
-                                  'bg-yellow-100 text-yellow-800'
+                              task.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
+                                'bg-yellow-100 text-yellow-800'
                               }`}>
                               {task.status}
                             </span>
