@@ -3,14 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers } from '../../store/slices/userSlice'; // adjust pat
+import { fetchCompanies } from '../../store/slices/companySlice'; // adjust pat
 import Button from '../common/Button';
 
 
 const TaskForm = ({ onSubmit, onCancel, userRole, companyId, initialData }) => {
   const { users } = useSelector((state) => state.users);
+   const { companies } = useSelector((state) => state.companies);
   console.log("user ", users);
   const dispatch = useDispatch();
-  const { user: currentUser } = useSelector((state) => state.auth);
   
   const [formData, setFormData] = useState({
     title: '',
@@ -26,6 +27,7 @@ const TaskForm = ({ onSubmit, onCancel, userRole, companyId, initialData }) => {
   // Fetch users when component mounts
   useEffect(() => {
     dispatch(fetchUsers());
+    dispatch(fetchCompanies())
   }, [dispatch]);
   
   const [errors, setErrors] = useState({});
@@ -42,6 +44,9 @@ const TaskForm = ({ onSubmit, onCancel, userRole, companyId, initialData }) => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log("companies  ", companies);
+  
 
   const validate = () => {
     const newErrors = {};
@@ -208,22 +213,7 @@ const TaskForm = ({ onSubmit, onCancel, userRole, companyId, initialData }) => {
         </div>
       </div>
 
-      {userRole === 'admin' && (
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Company
-          </label>
-          <select
-            name="company"
-            value={formData.company}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-          >
-            <option value="">Select Company</option>
-            {/* Companies would be populated from store */}
-          </select>
-        </div>
-      )}
+     
 
       <div className="flex justify-end space-x-3 pt-4">
         <Button
