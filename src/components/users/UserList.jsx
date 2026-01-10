@@ -31,11 +31,10 @@ const UserList = ({ users, currentUser, onEdit, onDelete, companies }) => {
     );
   };
 
-  const getCompanyName = (companyId) => {
-    const company = companies.find(c => c._id === companyId);
-    return company ? company.name : 'N/A';
-  };
 
+
+  // console.log("Users .... ", users);
+  
   return (
     <div className="bg-white shadow overflow-hidden sm:rounded-md">
       <ul className="divide-y divide-gray-200">
@@ -62,7 +61,7 @@ const UserList = ({ users, currentUser, onEdit, onDelete, companies }) => {
                   </div>
                   <p className="text-sm text-gray-500">{user.email}</p>
                   <div className="mt-1 flex items-center space-x-4 text-xs text-gray-500">
-                    <span>Company: {getCompanyName(user.company)}</span>
+                    <span>Company: {user?.company?.name}</span>
                     {user.manager && (
                       <span>Manager: {user.manager.name}</span>
                     )}

@@ -21,6 +21,8 @@ const Companies = () => {
     dispatch(fetchCompanies());
   }, [dispatch]);
 
+  console.log("companies ", companies);
+  
   const filteredCompanies = companies.filter(company =>
     company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     company.email?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -105,7 +107,7 @@ const Companies = () => {
         </div>
         <div className="bg-white p-6 rounded-lg shadow">
           <div className="text-2xl font-bold text-gray-900">
-            {companies.reduce((acc, company) => acc + (company.users || 0), 0)}
+            {companies.reduce((acc, company) => acc + (company.totalUser || 0), 0)}
           </div>
           <div className="text-gray-600">Total Users</div>
         </div>
