@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUsers, createUser, updateUser, deleteUser } from '../store/slices/userSlice';
+import { fetchCompanies} from '../store/slices/companySlice';
 import UserList from '../components/users/UserList';
 import UserForm from '../components/users/UserForm';
 import Modal from '../components/common/Modal';
@@ -20,9 +21,10 @@ const Users = () => {
 
   useEffect(() => {
     dispatch(fetchUsers());
+    dispatch(fetchCompanies())
   }, [dispatch]);
 
-  // console.log("users ", users);
+  // console.log("companies frooo ", companies);
   
 const filteredUsers = users.filter(user =>
   user.role !== 'admin' &&

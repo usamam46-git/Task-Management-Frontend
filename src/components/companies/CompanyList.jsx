@@ -22,6 +22,9 @@ const CompanyList = ({ companies, onEdit, onDelete }) => {
               Contact
             </th>
             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Total Staff
+            </th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Status
             </th>
             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -52,6 +55,13 @@ const CompanyList = ({ companies, onEdit, onDelete }) => {
                 <div className="text-sm text-gray-900">{company.email}</div>
                 <div className="text-sm text-gray-500">{company.phone}</div>
                 <div className="text-sm text-gray-500">{company.address}</div>
+              </td>
+               <td className="px-6 py-4">
+                <div className="flex items-center">
+                 <div className="text-sm text-gray-500">{company.totalUser}</div>
+                 
+                 
+                </div>
               </td>
               <td className="px-6 py-4">
                 <div className="flex items-center">
