@@ -13,6 +13,7 @@ import {
 import SubTaskForm from './SubTaskForm';
 import Modal from '../common/Modal';
 import { TASK_STATUS } from '../../utils/constants';
+    import toast from 'react-hot-toast';
 
 const SubTaskList = ({
     days = [],
@@ -116,17 +117,30 @@ const SubTaskList = ({
         }
     };
 
+
+
     const handleDeleteClick = async (subTaskId) => {
-        if (!isManager && window.confirm('Are you sure you want to delete this subtask?')) {
+        if (!isManager) {
+            const confirmDelete = window.confirm('Are you sure you want to delete this subtask?');
+            if (!confirmDelete) return;
+
             try {
                 await onDeleteSubTask(taskId, subTaskId);
-                window.location.reload(); // Reload after delete
+
+                // Show success toast
+                toast.success('Subtask deleted successfully!');
+
+                // Optional: instead of full reload, update state
+                // setSubTasks(subTasks.filter(st => st._id !== subTaskId));
+
+                window.location.reload(); // Reload after delete (optional if state updated)
             } catch (error) {
                 console.error('Failed to delete subtask:', error);
-                alert('Failed to delete subtask. Please try again.');
+                toast.error('Failed to delete subtask. Please try again.');
             }
         }
     };
+
 
     const handleUpdateSubTask = async (subTaskData) => {
         if (onUpdateSubTask && editingSubTask && !isManager) {
@@ -248,7 +262,7 @@ const SubTaskList = ({
                                                         <div className="flex items-center justify-between mb-2">
                                                             <div className="flex items-center space-x-3">
                                                                 <button
-                                                                   
+
                                                                     disabled={isManager}
                                                                     className={isManager ? 'cursor-not-allowed opacity-50' : ''}
                                                                 >
